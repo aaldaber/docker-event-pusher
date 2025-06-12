@@ -12,4 +12,8 @@ while read timestamp container_name; do
   curl --data-binary @- \
        -H "Authorization: Basic $AUTH_HEADER" \
        "$PUSHGATEWAY_URL/metrics/job/container_start/instance/$container_name"
+  sleep 1  # give it a second
+  echo "container_start{container=\"$container_name\"} 0" | \
+  curl -H "Authorization: Basic $AUTH_HEADER" \
+       --data-binary @- "$PUSHGATEWAY_URL/metrics/job/container_start/instance/$container_name"
 done
