@@ -1,0 +1,11 @@
+services:
+  docker-event-pusher:
+    build: .
+    container_name: docker-event-pusher
+    environment:
+      - PUSHGATEWAY_URL=http://pushgateway.example.com:9091
+      - PUSHGATEWAY_USER=your_username
+      - PUSHGATEWAY_PASS=your_password
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
